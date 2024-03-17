@@ -47,7 +47,6 @@ export function SignUpComponent() {
                     setDisplayError(false)
                     setDisplaySuccess(false)
                     setDisplayLoading(true)
-                    console.log(values)
 
                     // const response = await fetch('http://127.0.0.1:3005/api/users', {
                     const response = await fetch('/api/users', {

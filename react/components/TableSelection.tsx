@@ -50,7 +50,6 @@ export function TableSelection() {
             // const response = await fetch(`http://127.0.0.1:3005/api/users/${filter}`);
             const response = await fetch(`/api/users/${filter}`);
             const data = await response.json();
-            console.log(data)
             setUsers(data["users"]);
         } catch (error) {
             console.error(`Failed to fetch ${filter} users:`, error);

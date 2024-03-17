@@ -45,14 +45,10 @@ app.listen(port, () => {
   app.put('/api/users/:status?/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.params;
-    const { role } = req.body;
 
-    console.log('id ' + id)
-    console.log('status ' + status)
     try {
-      const result = await client.request(updateItem('participants', id, { status: status, role: role}))
+      const result = await client.request(updateItem('participants', id, { status: status}))
 
-      console.log('result ' + result)
       if (status === 'approved') {
         const user = await client.request(readItem('participants', id));
         console.log('user ' + user)
