@@ -1,0 +1,8 @@
+.git
+.gitignore
+.dockerignore
+node_modules/
+react/dist/
+api/node_modules/
+react/node_modules/
+
