@@ -7,6 +7,7 @@ import {
     Container,
     Button,
     Center,
+    Image,
 } from '@mantine/core';
 import classes from './signupComponent.module.css';
 import { useState } from 'react';
@@ -37,10 +38,10 @@ export function SignUpComponent() {
 
     return (
         <Container size={480} my={40}>
+            <Image src={"/logo.png"} alt="logo" height={100} mb={10} fit="contain" />
             <Title ta="center" className={classes.title}>
                 Sign up for the hackathon!
             </Title>
-
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
                 <form onSubmit={form.onSubmit(async (values) => {
                     // reset error and success messages
@@ -48,8 +49,8 @@ export function SignUpComponent() {
                     setDisplaySuccess(false)
                     setDisplayLoading(true)
 
-                    // const response = await fetch('http://127.0.0.1:3005/api/users', {
-                    const response = await fetch('/api/users', {
+                    const response = await fetch('http://127.0.0.1:3005/api/users', {
+                        // const response = await fetch('/api/users', {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(values)
@@ -60,7 +61,7 @@ export function SignUpComponent() {
 
                     if (response.status === 200) {
                         setDisplaySuccess(true)
-                    } else if (response.status === 501){
+                    } else if (response.status === 501) {
                         setDisplayError(true)
                         setError(await response.text())
                     } else {

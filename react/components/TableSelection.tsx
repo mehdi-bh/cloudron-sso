@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Table, ScrollArea, Text, rem, Container, Center, Space, Flex, Button, ActionIcon, Title } from '@mantine/core';
+import { Table, ScrollArea, Text, rem, Container, Center, Space, Flex, Button, ActionIcon, Title, Select } from '@mantine/core';
 import classes from './TableSelection.module.css';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
@@ -36,6 +36,7 @@ interface User {
     company: string;
     job_title: string;
     email: string;
+    role: string;
     status: string;
 }
 
@@ -47,8 +48,8 @@ export function TableSelection() {
 
     const fetchUsers = async () => {
         try {
-            // const response = await fetch(`http://127.0.0.1:3005/api/users/${filter}`);
-            const response = await fetch(`/api/users/${filter}`);
+            const response = await fetch(`http://127.0.0.1:3005/api/users/${filter}`);
+            // const response = await fetch(`/api/users/${filter}`);
             const data = await response.json();
             setUsers(data["users"]);
         } catch (error) {
@@ -62,8 +63,8 @@ export function TableSelection() {
 
     const updateUserStatus = async (id: any, status: any) => {
         try {
-            // const response = await fetch(`http://127.0.0.1:3005/api/users/${status}/${id}`, { method: 'PUT' });
-            const response = await fetch(`/api/users/${status}/${id}`, { method: 'PUT' });
+            const response = await fetch(`http://127.0.0.1:3005/api/users/${status}/${id}`, { method: 'PUT' });
+            // const response = await fetch(`/api/users/${status}/${id}`, { method: 'PUT' });
             const data = await response.json();
             fetchUsers();
         } catch (error) {
@@ -78,6 +79,15 @@ export function TableSelection() {
                 <Table.Td>{item.lastname}</Table.Td>
                 <Table.Td>{item.company}</Table.Td>
                 <Table.Td>{item.job_title}</Table.Td>
+                <Table.Td>{item.status == "pending" ?
+                    <Select
+                        data={["admin", "user"]}
+                        value={item.role}
+                        onChange={() => {
+                            console.log(item.role)
+                        }} />
+                    : <>{item.role}</>}
+                </Table.Td>
                 <Table.Td>{item.email}</Table.Td>
                 <Table.Td>
                     <Flex gap="md">
@@ -127,6 +137,7 @@ export function TableSelection() {
                             <Table.Th>Nachname</Table.Th>
                             <Table.Th>Unternehmen</Table.Th>
                             <Table.Th>Job</Table.Th>
+                            <Table.Th>Role</Table.Th>
                             <Table.Th>Email</Table.Th>
                             <Table.Th style={{ width: rem(40) }}>
                                 <Center>
