@@ -31,7 +31,7 @@ export function SignUpComponent() {
         },
 
         validate: {
-            username: (value) => (value.length >= 8 ? null : "Username must be at least 8 characters long"),
+            username: (value) => (value.length >= 4 ? null : "Username must be at least 8 characters long"),
             email: (value) => (pattern.test(value) ? null : "Invalid email")
         }
     })
@@ -49,8 +49,8 @@ export function SignUpComponent() {
                     setDisplaySuccess(false)
                     setDisplayLoading(true)
 
-                    const response = await fetch('http://127.0.0.1:3005/api/users', {
-                        // const response = await fetch('/api/users', {
+                    // const response = await fetch('http://127.0.0.1:3005/api/users', {
+                    const response = await fetch('/api/users', {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(values)

@@ -48,8 +48,8 @@ export function TableSelection() {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:3005/api/users/${filter}`);
-            // const response = await fetch(`/api/users/${filter}`);
+            // const response = await fetch(`http://127.0.0.1:3005/api/users/${filter}`);
+            const response = await fetch(`/api/users/${filter}`);
             const data = await response.json();
             setUsers(data["users"]);
         } catch (error) {
@@ -63,8 +63,8 @@ export function TableSelection() {
 
     const updateUserStatus = async (id: any, status: any) => {
         try {
-            const response = await fetch(`http://127.0.0.1:3005/api/users/${status}/${id}`, { method: 'PUT' });
-            // const response = await fetch(`/api/users/${status}/${id}`, { method: 'PUT' });
+            // const response = await fetch(`http://127.0.0.1:3005/api/users/${status}/${id}`, { method: 'PUT' });
+            const response = await fetch(`/api/users/${status}/${id}`, { method: 'PUT' });
             const data = await response.json();
             fetchUsers();
         } catch (error) {
