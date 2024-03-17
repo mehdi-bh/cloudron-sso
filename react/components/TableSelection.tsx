@@ -1,6 +1,5 @@
-import cx from 'clsx';
 import { useEffect, useState } from 'react';
-import { Table, Checkbox, ScrollArea, Text, rem, Container, Center, Space, Flex, Button, UnstyledButton, Accordion, ActionIcon, Title } from '@mantine/core';
+import { Table, ScrollArea, Text, rem, Container, Center, Space, Flex, Button, ActionIcon, Title } from '@mantine/core';
 import classes from './TableSelection.module.css';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
@@ -32,11 +31,12 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 // ];
 interface User {
     id: string;
-    first_name: string;
-    last_name: string;
+    firstname: string;
+    lastname: string;
     company: string;
-    job: string;
+    job_title: string;
     email: string;
+    status: string;
 }
 
 
@@ -45,18 +45,13 @@ export function TableSelection() {
     const [filter, setFilter] = useState("pending");
     const [users, setUsers] = useState<User[]>([]);
 
-    // const [selection, setSelection] = useState(['1']);
-    // const toggleRow = (id: string) =>
-    //     setSelection((current) =>
-    //         current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-    //     );
-
     const fetchUsers = async () => {
         try {
             // const response = await fetch(`http://127.0.0.1:3005/api/users/${filter}`);
             const response = await fetch(`/api/users/${filter}`);
             const data = await response.json();
-            setUsers(data["user"]);
+            console.log(data)
+            setUsers(data["users"]);
         } catch (error) {
             console.error(`Failed to fetch ${filter} users:`, error);
         }
@@ -80,19 +75,24 @@ export function TableSelection() {
     const rows = users.map((item) => {
         return (
             <Table.Tr key={item.id}>
-                <Table.Td>{item.first_name}</Table.Td>
-                <Table.Td>{item.last_name}</Table.Td>
+                <Table.Td>{item.firstname}</Table.Td>
+                <Table.Td>{item.lastname}</Table.Td>
                 <Table.Td>{item.company}</Table.Td>
-                <Table.Td>{item.job}</Table.Td>
+                <Table.Td>{item.job_title}</Table.Td>
                 <Table.Td>{item.email}</Table.Td>
                 <Table.Td>
                     <Flex gap="md">
-                        <ActionIcon variant="filled" color="red" radius="md" onClick={() => { updateUserStatus(item.id, "reject") }} >
-                            <IconX />
-                        </ActionIcon>
-                        <ActionIcon variant="filled" color="green" radius="md" onClick={() => { updateUserStatus(item.id, "approve") }}>
-                            <IconCheck />
-                        </ActionIcon>
+                        {item.status == "pending" ?
+                            <>
+                                <ActionIcon variant="filled" color="red" radius="md" onClick={() => { updateUserStatus(item.id, "rejected") }} >
+                                    <IconX />
+                                </ActionIcon>
+                                <ActionIcon variant="filled" color="green" radius="md" onClick={() => { updateUserStatus(item.id, "approved") }}>
+                                    <IconCheck />
+                                </ActionIcon>
+                            </>
+                            : <Text c="gray">{item.status}</Text>}
+
                     </Flex>
                 </Table.Td>
             </Table.Tr>
@@ -108,12 +108,16 @@ export function TableSelection() {
             <Space h="5vh" />
             <Center>
                 <Flex gap="md">
-                    <Button onClick={() => { setFilter("pending") }}>Pending</Button>
+                    <Button onClick={() => {
+                        fetchUsers();
+                        setFilter("pending")
+                    }}>Pending</Button>
                     <Button onClick={() => { setFilter("approved") }}>Approved</Button>
                     <Button onClick={() => { setFilter("rejected") }}>Rejected</Button>
                 </Flex>
             </Center>
             <Text ta={"center"} mt={"lg"}>{filter}</Text>
+            <Space h="5vh" />
             <Space h="5vh" />
 
             <ScrollArea>
@@ -127,7 +131,7 @@ export function TableSelection() {
                             <Table.Th>Email</Table.Th>
                             <Table.Th style={{ width: rem(40) }}>
                                 <Center>
-                                    Verify
+                                    Status
                                 </Center>
                             </Table.Th>
                         </Table.Tr>

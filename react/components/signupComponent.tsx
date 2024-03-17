@@ -16,13 +16,14 @@ export function SignUpComponent() {
     const [displayError, setDisplayError] = useState(false)
     const [displaySuccess, setDisplaySuccess] = useState(false)
     const [displayLoading, setDisplayLoading] = useState(false)
+    const [error, setError] = useState("")
     const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 
     const form = useForm({
         initialValues: {
             username: "",
-            first_name: "",
-            last_name: "",
+            firstname: "",
+            lastname: "",
             company: "",
             job_title: "",
             email: "",
@@ -46,10 +47,11 @@ export function SignUpComponent() {
                     setDisplayError(false)
                     setDisplaySuccess(false)
                     setDisplayLoading(true)
-                    // console.log(values)
+                    console.log(values)
 
+                    // const response = await fetch('http://127.0.0.1:3005/api/users', {
                     const response = await fetch('/api/users', {
-                        method: 'POST',
+                        method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(values)
                     });
@@ -59,20 +61,25 @@ export function SignUpComponent() {
 
                     if (response.status === 200) {
                         setDisplaySuccess(true)
+                    } else if (response.status === 501){
+                        setDisplayError(true)
+                        setError(await response.text())
                     } else {
                         setDisplayError(true)
+                        setError("There was an error signing up.")
                     }
+
                 })}>
                     <TextInput label="Username" placeholder="Username" required {...form.getInputProps("username")} />
-                    <TextInput label="First Name" placeholder="Max" required my={"md"} {...form.getInputProps("first_name")} />
-                    <TextInput label="Last Name" placeholder="Mustermann" required my={"md"} {...form.getInputProps("last_name")} />
+                    <TextInput label="First Name" placeholder="Max" required my={"md"} {...form.getInputProps("firstname")} />
+                    <TextInput label="Last Name" placeholder="Mustermann" required my={"md"} {...form.getInputProps("lastname")} />
                     <TextInput label="Email" placeholder="you@gmail.com" required my={"md"} {...form.getInputProps("email")} />
                     <TextInput label="Company" placeholder="Company" required my={"md"} {...form.getInputProps("company")} />
                     <TextInput label="Job" placeholder="Job Title" required my={"md"} {...form.getInputProps("job_title")} />
                     <Checkbox label="I agree you to sell my data" my="md" />
                     <Center>
                         {displaySuccess && (<Text c="green" mb="xl">You signed up successfully!</Text>)}
-                        {displayError && (<Text c="red" mb="xl">There was an error!</Text>)}
+                        {displayError && (<Text c="red" mb="xl">{error}</Text>)}
                         {displayLoading && (<Text c="yellow" mb="xl">Loading...</Text>)}
                     </Center>
                     <Button fullWidth type="submit">
