@@ -8,7 +8,7 @@ const port = 3005;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static('../react/dist'));
+app.use(express.static('../react/out'));
 
 const data = [
   {

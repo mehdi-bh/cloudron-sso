@@ -2,7 +2,8 @@
 .gitignore
 .dockerignore
 node_modules/
-react/dist/
-api/node_modules/
+react/out/
+react/.next/
 react/node_modules/
+api/node_modules/
 

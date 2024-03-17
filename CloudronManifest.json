@@ -1,7 +1,8 @@
 {
+  "id": "dev.cloudfest.registration",
   "version": "0.1.0",
   "healthCheckPath": "/",
-  "httpPort": 3000,
+  "httpPort": 3005,
   "addons": {
     "localstorage": {},
     "postgresql": {}
