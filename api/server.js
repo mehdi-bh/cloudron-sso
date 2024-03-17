@@ -8,6 +8,8 @@ const port = 3005;
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use(express.static('../react/dist'));
+
 const data = [
   {
     id: '1',
@@ -144,4 +146,6 @@ app.listen(port, () => {
   //     res.status(500).send(err.message);
   //   }
   // });
+
+  console.log(`Server listening on ${port}`);
 });  
