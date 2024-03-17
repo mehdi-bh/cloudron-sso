@@ -36,7 +36,7 @@ interface User {
     company: string;
     job_title: string;
     email: string;
-    role: string;
+    // role: string;
     status: string;
 }
 
@@ -79,15 +79,17 @@ export function TableSelection() {
                 <Table.Td>{item.lastname}</Table.Td>
                 <Table.Td>{item.company}</Table.Td>
                 <Table.Td>{item.job_title}</Table.Td>
-                <Table.Td>{item.status == "pending" ?
+                {/* <Table.Td>{item.status == "pending" ?
                     <Select
                         data={["admin", "user"]}
                         value={item.role}
-                        onChange={() => {
-                            console.log(item.role)
-                        }} />
+                        onChange={(_value, option) => {
+                            console.log("selected value:", option.value)
+                            fetchUsers();
+                        }}
+                    />
                     : <>{item.role}</>}
-                </Table.Td>
+                </Table.Td> */}
                 <Table.Td>{item.email}</Table.Td>
                 <Table.Td>
                     <Flex gap="md">
@@ -137,7 +139,7 @@ export function TableSelection() {
                             <Table.Th>Nachname</Table.Th>
                             <Table.Th>Unternehmen</Table.Th>
                             <Table.Th>Job</Table.Th>
-                            <Table.Th>Role</Table.Th>
+                            {/* <Table.Th>Role</Table.Th> */}
                             <Table.Th>Email</Table.Th>
                             <Table.Th style={{ width: rem(40) }}>
                                 <Center>
