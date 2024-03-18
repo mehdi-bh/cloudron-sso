@@ -127,30 +127,35 @@ export function TableSelection() {
                     <Button onClick={() => { setFilter("rejected") }}>Rejected</Button>
                 </Flex>
             </Center>
-            <Text ta={"center"} mt={"lg"}>{filter}</Text>
+            <Text ta={"center"} mt={"lg"}>{filter + " page"}</Text>
             <Space h="5vh" />
             <Space h="5vh" />
 
-            <ScrollArea>
-                <Table miw={800} verticalSpacing="sm">
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th>Vorname</Table.Th>
-                            <Table.Th>Nachname</Table.Th>
-                            <Table.Th>Unternehmen</Table.Th>
-                            <Table.Th>Job</Table.Th>
-                            {/* <Table.Th>Role</Table.Th> */}
-                            <Table.Th>Email</Table.Th>
-                            <Table.Th style={{ width: rem(40) }}>
-                                <Center>
-                                    Status
-                                </Center>
-                            </Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                </Table>
-            </ScrollArea>
+            {users.length == 0 && filter == "pending" ?
+                <Center><Text ta={"center"}>No more pending users</Text></Center>
+                :
+                <ScrollArea>
+                    <Table miw={800} verticalSpacing="sm">
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th>Vorname</Table.Th>
+                                <Table.Th>Nachname</Table.Th>
+                                <Table.Th>Unternehmen</Table.Th>
+                                <Table.Th>Job</Table.Th>
+                                {/* <Table.Th>Role</Table.Th> */}
+                                <Table.Th>Email</Table.Th>
+                                <Table.Th style={{ width: rem(40) }}>
+                                    <Center>
+                                        Status
+                                    </Center>
+                                </Table.Th>
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>{rows}</Table.Tbody>
+                    </Table>
+                </ScrollArea>
+            }
+
         </Container>
 
     );
