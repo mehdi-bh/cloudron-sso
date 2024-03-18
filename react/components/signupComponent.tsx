@@ -31,7 +31,7 @@ export function SignUpComponent() {
         },
 
         validate: {
-            username: (value) => (value.length >= 4 ? null : "Username must be at least 8 characters long"),
+            username: (value) => (value.length >= 4 ? null : "Username must be at least 4 characters long"),
             email: (value) => (pattern.test(value) ? null : "Invalid email")
         }
     })
