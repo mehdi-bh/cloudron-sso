@@ -129,6 +129,16 @@ export function TableSelection() {
             </Center>
             <Text ta={"center"} mt={"lg"}>{filter + " page"}</Text>
             <Space h="5vh" />
+            {filter == "rejected" &&
+                <Center>
+                    <Button color="red" onClick={() => {
+                        fetchUsers();
+
+                    }}>
+                        Delete all rejected users
+                    </Button>
+                </Center>
+            }
             <Space h="5vh" />
 
             {users.length == 0 && filter == "pending" ?
