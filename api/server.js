@@ -109,9 +109,6 @@ app.listen(port, () => {
   app.delete('/api/users/', async (req, res) => {
   
     try {
-      const rejectedUsers = await fetchParticipantsByStatus('rejected');
-      const ids = rejectedUsers.map(user => user.id + '');
-
       const result = await client.request(deleteItems('participants', { status: { _eq: 'rejected' } }));
       res.json({ response: result });
     } catch (err) {
